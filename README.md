@@ -1,46 +1,51 @@
 # Central
 The New Family System
 Release Candiate
-#Change Log:
-# V1.1
-Fixed Bugs
+# Change Log:
 
-Seperated The Base Codes As The Kernel
+## V1.1
+### Fixed Bugs
 
-History Support
+### Seperated The Base Codes As The Kernel
 
-Multiple New Features.
+### History Support
 
-# V1.0
+### Multiple New Features.
 
-Fixed Bug When Adding Money If Child is NOT 'C'
+### SQL Command Bug Fixes
 
-Fixed Bug When Removing Money
+## V1.0
 
-Fixed Language Settings
+### Fixed Bug When Adding Money If Child is NOT 'C'
 
-Localization More Strings
+### Fixed Bug When Removing Money
 
-And Fixed Serval Bugs and API Added
+### Fixed Language Settings
 
-!!Mint Kernel is a critical part of Central Now and it cannot be run without the kernel.!!
+### Localization More Strings
 
-!!MintKernel are both license under MIT LICENSE!!
+### Fixed Serval Bugs and API Added
 
-!!WARNING:MINTLOG IS SHARED SOURCE, BUT NOT OPEN SOURCE, THAT MEANS YOU CAN VIEW AND RUN IT, BUT YOU CANNOT MODIFY IT,THANKS FOR SUPPORTING US!!
-copyright (c) 2020-2021 Meow Tech Open Source / Places Apps, all rights reserved.
+# Warnings And Disclaimer
 
-!!MintKernel is a seprate project that is now NOT LINKED with central!!
+## !!Mint Kernel is a critical part of Central Now and it cannot be run without the kernel.!!
 
-!!Central is licensed under EPL 2!!
+## !!MintKernel are both license under MIT LICENSE!!
 
-!!The central is now just a frontend of MintKernel, Not a self-runnable project!!
+## !!WARNING:MINTLOG IS SHARED SOURCE, BUT NOT OPEN SOURCE, THAT MEANS YOU CAN VIEW AND RUN IT, BUT YOU CANNOT MODIFY IT,THANKS FOR SUPPORTING US!!
+## copyright (c) 2020-2021 Meow Tech Open Source / Places Apps, all rights reserved.
 
-!!MintLog is a seprate project and can be excluded with the kernel!!
+## !!MintKernel is a seprate project that is now NOT LINKED with central!!
 
-!!MintLog cannot be use with other program without Meow Tech Open Source / Places App Written Permission!!
+## !!Central is licensed under EPL 2!!
 
-!!MintLog Source Code MUST NOT be use in other projects!!
+## !!The central is now just a frontend of MintKernel, Not a self-runnable project!!
+
+## !!MintLog is a seprate project and can be excluded with the kernel!!
+
+## !!MintLog cannot be use with other program without Meow Tech Open Source / Places App Written Permission!!
+
+## !!MintLog Source Code MUST NOT be use in other projects!!
 
 
 Enjoy,
