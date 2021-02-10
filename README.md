@@ -26,3 +26,8 @@ Version 1.1 - RTM Escrow
 
 Enjoy,
 The Central Team.
+
+
+-----------------------------------------------------
+Tags
+fast reliable flask python html css hyper text markup language hypertext-markup-language secure login logout gui web webapp webapi api fastapi free opensource shared source server selfhosted self-hosted sharedsource family family friendly friendly
