@@ -31,3 +31,10 @@ The Central Team.
 -----------------------------------------------------
 Tags
 fast reliable flask python html css hyper text markup language hypertext-markup-language secure login logout gui web webapp webapi api fastapi free opensource shared source server selfhosted self-hosted sharedsource family family friendly friendly
+
+
+
+
+
+## 😺 Meow Tech Open Source
+This project is made with ❤ by Meow Tech Open Source Team.
