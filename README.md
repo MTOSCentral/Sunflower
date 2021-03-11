@@ -1,10 +1,10 @@
-# Central
+# Sunflower
 The New Family System
 Version 1.1 - RTM Escrow
 
 # Warnings And Disclaimer
 
-## !!Mint Kernel is a critical part of Central Now and it cannot be run without the kernel.!!
+## !!Mint Kernel is a critical part of Sunflower Now and it cannot be run without the kernel.!!
 
 ## !!MintKernel are both license under MIT LICENSE!!
 
@@ -19,7 +19,7 @@ Version 1.1 - RTM Escrow
 
 ## !!MintLog is a seprate project and can be excluded with the kernel!!
 
-## !!MintLog cannot be use with other program without Meow Tech Open Source / Places App Written Permission!!
+## !!MintLog cannot be use with other program without Meow Tech Open Source / Places Apps Written Permission!!
 
 ## !!MintLog Source Code MUST NOT be use in other projects!!
 
@@ -27,6 +27,7 @@ Version 1.1 - RTM Escrow
 Enjoy,
 The Central Team.
 
+Rebranded As Sunflower, Central is now a series.
 
 -----------------------------------------------------
 Tags
