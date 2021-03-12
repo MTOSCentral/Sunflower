@@ -1,0 +1,14 @@
+{% extends "nano/base_setup.html" %}
+{% block webtitle %}{{productname}} System Update{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+   <body>
+      <form action = "#" method = "POST" 
+         enctype = "multipart/form-data">
+         <label for="file">Example file input</label>
+         <input type ="file" name="file" class="btn btn-primary"/>
+         <input type="submit" class="btn btn-primary" value="OK"/>
+      </form>   
+   </body>
+{% endblock %}
+{% block footer %}Copyright (c) {{productname}} {{year}}, all rights reserved.{% endblock %}

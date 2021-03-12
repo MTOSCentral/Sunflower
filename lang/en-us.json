@@ -1,0 +1,15 @@
+{
+    "msg1":"Password Or Username Incorrect",
+    "msg2":"Logged In Successfully",
+    "msg3":"You Have Already Logged In!",
+    "msg4":"You Have Been Logged Out.",
+    "msg5":"You Must Login To Complete The Required Action",
+    "msg6":"You Don't Have Permission To Do The Required Action.",
+    "msg7":"Session Error,You Have Been Logged Out.",
+    "success":"Successfully Ran",
+    "msg8":"You Must Login As The Required User Role (Adult,Child)",
+    "msg9":"You Must Login As Adult.",
+    "msg10":"You Have Been Logged Out To Prevent Session Hjacking.",
+    "msg11":"You Must Login As Children",
+    "msg12":"Username Cannot Be Empty."
+}

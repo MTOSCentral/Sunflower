@@ -1,0 +1,12 @@
+{% extends "nano/zh-HK/base.html" %}
+{%block webtitle %}添加/刪除{%endblock%}
+{%block productname%}{{productname}}{%endblock%}
+{%block body%}
+    <form action="＃" method="post">
+    <lable>請輸入金額：</lable>
+    <input type="number" name="dollars" class="w-75 form-control input-normal"/>
+    <br>
+    <input type="submit" value="添加/刪除" class="btn btn-primary"/>
+    </form>
+{%endblock%}
+{%block footer%}Copyright (c) {{productname}} {{year}}, all rights reserved.{%endblock%}

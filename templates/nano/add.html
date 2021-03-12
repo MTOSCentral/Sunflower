@@ -1,0 +1,14 @@
+{% extends "nano/base.html" %}
+{% block webtitle %}Money Action{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+    <form action="#" method="post">
+        <lable>Please Enter The Amount Of Money:</lable>
+        <input type="number" name="dollars" class="w-75 form-control input-normal"/>
+        <lable>Please The Child's Username</lable>
+        <input name="child" class="w-75 form-control input-normal"/>
+        <br>
+        <input type="submit" value="Continue" class="btn btn-primary"/>
+    </form>
+{% endblock %}
+{% block footer %}Copyright (c) {{productname}} {{year}}, all rights reserved.{% endblock %}

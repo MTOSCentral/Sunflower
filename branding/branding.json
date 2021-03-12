@@ -1,0 +1,8 @@
+{
+  "Vendor":"Meow Tech",
+  "ProductName":"Codenamed Central",
+  "ProductShortName":"Central",
+  "License":"license.txt",
+  "Website":"https://192.168.0.16/central/",
+  "UpdateServer":"https://192.168.0.16/central/upgrade/latest.mupd"
+}

@@ -1,0 +1,9 @@
+//Template/branding/branding.json(branding/branding.json)
+{
+"Vendor":"VendorName",
+"ProductName":"ProductName",
+"ProductShortName":"Product",
+"License":"license.file.txt",
+"Website":"https://somesite.web/product/",
+"UpdateServer":"https://somesite.web/product/upgrade/latest.mupd"
+}

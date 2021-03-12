@@ -1,0 +1,23 @@
+{% extends "nano/base.html" %}
+{% block webtitle %}{{productname}} Setup{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+<title>Setup Page</title>
+<form action="#" method="post">
+	<lable>Adult 1 Name:</lable>
+	<input type="text" name="a1n" class="w-75 form-control input-normal"/>
+	<label>Adult 1 Password:</label>
+	<input type="password" name="a1p" class="w-75 form-control input-normal"/>
+	<label>Adult 2 Name:</label>
+	<input type="text" name="a2n" class="w-75 form-control input-normal"/>
+	<label>Adult 2 Password:</label>
+	<input type="password" name="a2p" class="w-75 form-control input-normal"/>
+	<label>Child Name:</label>
+	<input type="text" name="cn" class="w-75 form-control input-normal"/>
+	<label>Child Password:</label>
+	<input type="password" name="cp" class="w-75 form-control input-normal"/>
+	<br>
+	<input type="submit" value="Setup" class="btn btn-primary"/>
+</form>
+{% endblock %}
+{% block footer %}Copyright (c) {{productname}} {{year}}, all rights reserved.{% endblock %}
