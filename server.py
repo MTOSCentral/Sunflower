@@ -1,14 +1,18 @@
-#Meow Tech Codenamed 'Central' (SE) Web Edition v1
-#Meow Tech Codenamed Central Beta 1.5
-#Project Name:Central
-#State:Beta 1.5 -> Release Canidate
+#Meow Tech Codenamed 'Central' (SE) Web Edition v1.1
+#Meow Tech Codenamed Central v1.1 Redstone
+#Project Name:Central Redstone
+#Mint Engine Implemented(kernel.py)
+#State:Beta/Prerelease -> Release Canidate
 import json
-from flask import Flask, redirect, url_for, render_template, request,session,flash
+from otp import OTP
+from tabulate import tabulate
+from flask import Flask, redirect, url_for, render_template, request,session,flash,send_file
 import sqlite3
 from datetime import datetime
 from api.api import apimodule
 from werkzeug.utils import append_slash_redirect
 from hashing import Hashing
+from flask_qrcode import QRcode
 import random
 import string
 import base64
@@ -17,6 +21,8 @@ from datetime import datetime
 from datetime import timedelta
 from oobe.oobe import oobeui
 from werkzeug.utils import secure_filename
+from kernel import Kernel
+from history import History
 brandinfo={}
 conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
 cursor = conn.cursor()
@@ -29,21 +35,24 @@ with open("branding\\branding.json") as file:
     lc=brandinfo["License"]
     print(productname)
     file.close()
-with open("lang\\en-US.json",encoding="utf-8") as file:
+with open("lang\\zh-HK.json",encoding="utf-8") as file:
     lang = json.load(file)
     file.close()
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
 app = Flask(__name__)
+QRcode(app)
 app.register_blueprint(apimodule, url_prefix="/api")
 app.register_blueprint(oobeui, url_prefix="/oobe")
 app.secret_key="ThEMoSTSeCuRePassWORdINThEWorLD"
+app.static_folder = 'static'
 year = datetime.now().strftime('%Y')
 app.permanent_session_lifetime = timedelta(days=10)
-build="0110"
-branch="centralbeta1_5.210906"
+build="0300"
+branch="rs_rc1.210211"
 fullbuildname=build+"."+branch
+FRIENDLYVERSION="1.2.0_PRERELEASE"
 hasher=Hashing()
 @app.route('/license')
 def license():
@@ -77,18 +86,12 @@ def chklogin(user,pw):
         rows=cur.fetchall()
         #print(rows)
         #print(rows[5][0])
-        for row in rows:
-            #print('!')
-            if hasher.check(passwd,row[1]) and user == row[0]:
-                #session["user"] = user
-                #session["role"] = row[2]
-                #gensession()
-                cor=True
-                return [True,user,row[2]]
-            #else:
-                #pass
-        if not cor:
+        kernel=Kernel()
+        tmp=kernel.checkuser(user, pw)
+        if tmp[0] == False:
             return [False,0]
+        else:
+            return [tmp[0],tmp[1][0],tmp[1][2]]
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -96,41 +99,47 @@ def login():
     stmt = """SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';"""
     cur=conn.execute(stmt)
     result = cur.fetchone()
-    if 1+1 !=2:
-        pass
-    #if result[0] == 0:
-        #flash("Your Server Haven't Been Setup Yet.")
-        #return redirect(url_for("oobe.start"))
+    if result[0] == 0:
+        flash("Your Server Haven't Been Setup Yet.")
+        return redirect(url_for("oobe.start"))
     else:
         #print(chklogin("a","a"))
+        #Kernel Module Implemented
         cor=False
         if request.method == "POST":
-            hasher=Hashing()
-            session.permanent = True
+            #hasher=Hashing()
+            #session.permanent = True
             user = request.form["nm"]
             passwd = request.form["pass"]
-            sqlstr='select * from users'
-            tmp=conn.execute(sqlstr)
+            kernel=Kernel()
+            if user == "" or passwd=="":
+                flash(lang["msg12"])
+                return redirect(url_for("login"))
+            if kernel.checkuser(user,passwd)[0]==True:
+                session["user"] = user
+                session["role"] = kernel.checkuser(user,passwd)[1][2]
+                gensession()
+                flash(lang["msg2"])
+                return redirect(url_for("home"))
+            #sqlstr='select * from users'
+            #tmp=conn.execute(sqlstr)
             #print(tmp)
-            rows=tmp.fetchall()
+            #rows=tmp.fetchall()
             #print(rows)
             #print(rows[5][0])
-            for row in rows:
+            #for row in rows:
                 #print('!')
-                if hasher.check(passwd,row[1]) and user == row[0]:
-                    if user == "" or passwd=="":
-                        flash(lang["msg12"])
-                        return redirect(url_for("login"))
-                    else:
-                        session["user"] = user
-                        session["role"] = row[2]
-                        gensession()
-                        cor=True
-                        flash(lang["msg2"])
-                        return redirect(url_for("home"))
+                #if hasher.check(passwd,row[1]) and user == row[0]:
+                    #else:
+                        #session["user"] = user
+                        #session["role"] = row[2]
+                        #gensession()
+                        #cor=True
+                        #flash(lang["msg2"])
+                        #return redirect(url_for("home"))
                 #else:
                     #pass
-            if not cor:
+            else:
                 flash(lang["msg1"])
                 return redirect(url_for("login"))
 
@@ -164,6 +173,8 @@ def logout():
             session.pop("child")
         if "cm" in session:
             session.pop("cm")
+        if "notes" in session:
+            session.pop("notes")
         flash(lang["msg4"])
         return redirect(url_for("login"))
     else:
@@ -206,8 +217,11 @@ def popadds():
         session.pop("step")
     if "cm" in session:
         session.pop("cm")
+    if "notes" in session:
+        session.pop("notes")
 @app.route('/addmoney', methods=["POST", "GET"])
 def addmoney():
+    kernel=Kernel()
     role=chkroleloggedin('adult')
     if request.method=="POST":
         if role != "!!":
@@ -216,14 +230,7 @@ def addmoney():
                 sqlstr='select * from users'
                 cur=conn.execute(sqlstr)
                 rows=cur.fetchall()
-                nowdollar="D"
-                for row in rows:
-                   # print('RAN USER='+session['user'])
-                    if row[0] == child and row[2]=="child":
-                        #print(row[3])
-                        #print("--------")
-                        nowdollar=row[3]
-                        #print(nowdollar)
+                nowdollar=kernel.getmoney(child)
                 if nowdollar == "D":
                     flash("The child account you entered either is not an valid account or is not a child.")
                     return redirect(url_for("addmoney"))
@@ -233,6 +240,7 @@ def addmoney():
                     session["add"]=enckey.encrypt(sessionid[session["sessionid"]],str(addmoney1))
                     session["child"]=enckey.encrypt(sessionid[session["sessionid"]],child)
                     session["cm"]=enckey.encrypt(sessionid[session["sessionid"]],nowdollar)
+                    session["notes"]=enckey.encrypt(sessionid[session["sessionid"]],request.form["notes"])
                     #print(session["add"])
                     #flash("Success!")
                     return redirect(url_for("add_now"))
@@ -243,7 +251,7 @@ def addmoney():
             return redirect(url_for("logout"))
     else:
         if role != "!!":
-            return render_template("nano/add.html",productname=productname,year=year)
+            return render_template("nano/add.html",productname=productname,year=year,action="Add")
         else:
             flash(lang["msg7"])
             return redirect(url_for("logout"))
@@ -251,8 +259,9 @@ def addmoney():
 @app.route('/add_now',methods=["POST", "GET"])
 def add_now():
     #Add Now!
+    kernel=Kernel()
     if request.method == "POST":
-        if "add" in session and "child" in session and "cm" in session:
+        if "add" in session and "child" in session and "cm" in session and "notes" in session:
             #session["add"]
             if chkroleloggedin(None) == "!!":
                 return redirect(url_for("logout"))
@@ -265,13 +274,13 @@ def add_now():
                         child=enckey.decrypt(sessionid[session["sessionid"]],session["child"])
                         adder=enckey.decrypt(sessionid[session["sessionid"]],session["add"])
                         nowdollar=enckey.decrypt(sessionid[session["sessionid"]],session["cm"])
-                        session.pop("child")
-                        session.pop("add")
-                        session.pop("cm")
-                        cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)+int(adder))+'" WHERE Name="'+child+'"'
-                        curs = conn.cursor()
-                        curs.execute(cmd)
-                        conn.commit()
+                        notes=enckey.decrypt(sessionid[session["sessionid"]],session["notes"])
+                        popadds()
+                        #cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)+int(adder))+'" WHERE Name="'+child+'"'
+                        #curs = conn.cursor()
+                        #curs.execute(cmd)
+                        #conn.commit()
+                        kernel.addmoney(child,session["user"],session["role"],adder,notes)
                         #Remake KEY
 
                         #History Module
@@ -284,10 +293,11 @@ def add_now():
                     flash(lang["msg1"]+"/"+lang["msg8"])
                     return redirect(url_for("home"))
         else:
+            popadds()
             return redirect(url_for("addmoney"))
     else:
         #Get
-        if "add" in session and "child" in session and "cm" in session:
+        if "add" in session and "child" in session and "cm" in session and "notes" in session:
             flash(lang["msg9"])
             return render_template("nano/login.html",productname=productname,year=year)
         else:
@@ -296,19 +306,15 @@ def add_now():
 @app.route('/removemoney', methods=["POST", "GET"])
 def removemoney():
     role=chkroleloggedin('adult')
+    kernel=Kernel()
     if request.method=="POST":
         if role != "!!":
             if role:
                 child=request.form["child"]
-                sqlstr='select * from users'
-                cur=conn.execute(sqlstr)
-                rows=cur.fetchall()
-                nowdollar="D"
-                for row in rows:
-                    #print('RAN USER='+session['user'])
-                    if row[0] == child and row[2]=="child":
-                        print(row[3])
-                        nowdollar=row[3]
+                #sqlstr='select * from users'
+                #cur=conn.execute(sqlstr)
+                #rows=cur.fetchall()
+                nowdollar=kernel.getmoney(child)
                 if nowdollar == "D":
                     flash("The child account you entered either is not an valid account or is not a child.")
                     return redirect(url_for("addmoney"))
@@ -319,9 +325,10 @@ def removemoney():
                     session["child"]=enckey.encrypt(sessionid[session["sessionid"]],child)
                     session["cm"]=enckey.encrypt(sessionid[session["sessionid"]],str(nowdollar))
                     session["step"]=enckey.encrypt(sessionid[session["sessionid"]],'1')
+                    session["notes"]=enckey.encrypt(sessionid[session["sessionid"]],request.form["notes"])
                     print(session["add"])
                     #return 'Added Money Now!'
-                    flash(lang["success"])
+                    #flash(lang["success"])
                     return redirect(url_for("remove_now"))
             else:
                 flash(lang["msg6"])
@@ -330,15 +337,16 @@ def removemoney():
             return redirect(url_for("logout"))
     else:
         if role != "!!":
-            return render_template("nano/add.html",productname=productname,year=year)
+            return render_template("nano/add.html",productname=productname,year=year,action="Remove")
         else:
             flash(lang["msg7"])
             return redirect(url_for("logout"))
 @app.route('/remove_now',methods=["POST", "GET"])
 def remove_now():
     #Remove Now!
+    kernel=Kernel()
     if request.method == "POST":
-        if "add" in session and "child" in session and "cm" in session and "step" in session:
+        if "add" in session and "child" in session and "cm" in session and "step" in session and "notes" in session:
             #session["add"]
             if chkroleloggedin(None) == "!!":
                 flash(lang["msg5"])
@@ -347,9 +355,9 @@ def remove_now():
             if enckey.decrypt(sessionid[session["sessionid"]],session["step"]) !="1":
                 return redirect(url_for('removemoney'))
             else:
-                chklogin1=chklogin(request.form['nm'],request.form['pass'])
+                chklogin1=kernel.checkuser(request.form['nm'],request.form['pass'])
                 if chklogin1[0]:
-                    if chklogin1[2] == "adult":
+                    if chklogin1[1][2] == "adult":
                         #PREP THE COMMAND
                         session["step"]=enckey.encrypt(sessionid[session["sessionid"]],'2')
                         #child=enckey.decrypt(sessionid[session["sessionid"]],session["child"])
@@ -370,7 +378,7 @@ def remove_now():
         else:
             return redirect(url_for("removemoney"))
     else:
-        if "add" in session and "child" in session and "cm" in session and "step" in session:
+        if "add" in session and "child" in session and "cm" in session and "step" in session and "notes" in session:
             flash(lang["msg9"])
             return render_template("nano/login.html",productname=productname,year=year)
         else:
@@ -379,8 +387,9 @@ def remove_now():
 @app.route('/remove_now2',methods=["POST", "GET"])
 def remove_now2():
     #Remove Now!
+    kernel=Kernel()
     if request.method == "POST":
-        if "add" in session and "child" in session and "cm" in session:
+        if "add" in session and "child" in session and "cm" in session and "notes" in session:
             #session["add"]
             if chkroleloggedin(None) == "!!":
                 return redirect(url_for("logout"))
@@ -388,24 +397,30 @@ def remove_now2():
             if enckey.decrypt(sessionid[session["sessionid"]],session["step"]) !="2":
                 return redirect(url_for('removemoney'))
             else:
-                chklogin1=chklogin(request.form['nm'],request.form['pass'])
+                chklogin1=kernel.checkuser(request.form['nm'],request.form['pass'])
                 if chklogin1[0]:
-                    if chklogin1[2] == "child" and request.form['nm'] == enckey.decrypt(sessionid[session["sessionid"]],session["child"]):
+                    if chklogin1[1][2] == "child" and request.form['nm'] == enckey.decrypt(sessionid[session["sessionid"]],session["child"]):
                         #PREP THE COMMAND
                         #enckey=EncryptPass()
                         child=enckey.decrypt(sessionid[session["sessionid"]],session["child"])
                         adder=enckey.decrypt(sessionid[session["sessionid"]],session["add"])
                         nowdollar=enckey.decrypt(sessionid[session["sessionid"]],session["cm"])
+                        notes=enckey.decrypt(sessionid[session["sessionid"]],session["notes"])
                         popadds()
                         #Remake KEY
                         regen()
-                        cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)-int(adder))+'" WHERE Name="'+child+'"'
-                        curs = conn.cursor()
-                        curs.execute(cmd)
-                        conn.commit()
+                        #cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)-int(adder))+'" WHERE Name="'+child+'"'
+                        #curs = conn.cursor()
+                        #curs.execute(cmd)
+                        #conn.commit()
                         #History Module
                         #Coming Soon :>
+                        kernel.removemoney(child,session["user"],session["role"],adder,notes)
                         flash(lang["success"])
+                        return redirect(url_for("home"))
+                    else:
+                        popadds()
+                        flash(lang["msg1"]+"/"+lang["msg8"]+"/ Your User is not the specified user.")
                         return redirect(url_for("home"))
                 else:
                     flash(lang["msg1"]+"/"+lang["msg8"]+"/ Your User is not the specified user.")
@@ -424,6 +439,55 @@ def remove_now2():
             popadds()
             return redirect(url_for("logout"))
 #Load Modular Components
+@app.route('/centver')
+@app.route('/about')
+@app.route('/version')
+def about():
+    kernel=Kernel()
+    history=History()
+    return "Mint Kernel Version: "+kernel.version()+"<br>Central frontend version: "+FRIENDLYVERSION+"<br> MintLog Version: "+history.version()
+@app.route('/list',methods=["POST","GET"])
+def list():
+    if "user" in session:
+        if request.method == "GET":
+            return render_template("nano/hist.html",productname=productname,year=year)
+        else:
+            history=History()
+            try:
+                startingdate=datetime.strptime(request.form["start"], "%Y-%m-%d").date().strftime("%Y%m%d")
+                endingdate=datetime.strptime(request.form["end"], "%Y-%m-%d").date().strftime("%Y%m%d")
+                return render_template("nano/list.html",lists=history.list(int(startingdate),int(endingdate)),productname=productname,year=year,startingdate=startingdate,endingdate=endingdate)
+            except Exception as e:
+                flash(e)
+                return render_template("nano/hist.html",productname=productname,year=year)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
+@app.route('/export/<int:start>/<int:end>')
+def export(start,end):
+    if "user" in session:
+        filename=datetime.now().strftime("%Y%m%d%H%M%S")+".txt"
+        with open(filename, 'w') as file:
+            history=History()
+            ex=history.list(start,end)
+            txt=tabulate(ex, headers=["Date","Action", "Money", "Adult", "Child", "Note", "Remaining Value"])
+            file.write(txt)
+        try:
+            return send_file(filename, attachment_filename=filename)
+        except Exception as e:
+            return str(e)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
+@app.route('/genotp')
+def otpgen():
+    if "user" in session:
+        otp=OTP(productname)
+        tmp=otp.genOTP()
+        enckey=EncryptPass()
+        return render_template("nano/2fa_gen.html",productname=productname,toqr=tmp[1],year=year)
+    else:
+        return redirect(url_for("login"))
 if __name__ == "__main__":
 	app.run(port=8888, debug=True,host="0.0.0.0")
 
