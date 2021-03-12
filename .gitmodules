@@ -1,0 +1,3 @@
+[submodule "MintKernel"]
+	path = kernel.py
+	url = https://github.com/MTOSCentral/MintKernel
