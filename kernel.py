@@ -1,6 +1,6 @@
 #Mint Kernel Dummy v1.1
 #Always Return False and Error, please download full version.
-VERSION="DUMMY"
+VERSION="vPlease Download The Real Version Of Github, because it is licensed under a different license, this verison will just throw you many errors.0.0"
 class Kernel:
     def __init__(self):
         print("Please Download The Kernel https://github.com/MTOSCentral/MintKernel")
@@ -22,3 +22,5 @@ class Kernel:
     def getmoney(self,user):
         print("Please Download The Kernel https://github.com/MTOSCentral/MintKernel")
         return "D"
+    def isreal(self):
+        return False
