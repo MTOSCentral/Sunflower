@@ -1,7 +1,9 @@
 # Sunflower
 The New Family System
-Version 1.1 - RTM Escrow
+Version 1.1 - RTM Escrow, BETA
 
+# Note
+Note:A Half-Working Implementation of an REST API is included
 # Warnings And Disclaimer
 
 ## !!Mint Kernel is a critical part of Sunflower Now and it cannot be run without the kernel.!!
