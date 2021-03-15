@@ -9,84 +9,56 @@ import sqlite3
 from flask import json
 from datetime import datetime
 from flask import jsonify
+from kernel import Kernel
 apimodule=Blueprint("api", __name__, static_folder="static", template_folder="template")
 conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
 cursor = conn.cursor()
 year = datetime.now().strftime('%Y')
 hasher=Hashing()
 links=['/','/setup']
-apis={'child':['lala3','child'],'adult':['lala','adult']}
-with open("branding\\branding.json") as file:
-    brandinfo = json.load(file)
-    productname = brandinfo["Vendor"]+" "+brandinfo["ProductName"]
-    lc=brandinfo["License"]
-    print(productname)
-    file.close()
-with open("lang\\en-us.json",encoding="utf-8") as file:
-    lang = json.load(file)
-    file.close()
-with open(lc,encoding="utf-8") as file:
-    license1=file.readlines()
-    file.close()
+apis={}
 def genapi(user,passwd):
-    hasher=Hashing()
-    sqlstr='select * from users'
-    cur=conn.execute(sqlstr)
-    rows=cur.fetchall()
-    cor=False
-    for row in rows:
-        if hasher.check(passwd,row[1]) and user == row[0]:
-            global apis
-            #session["user"] = user
-            #session["role"] = row[2]
-            #gensession()
-            cor=True
-            letters = string.ascii_letters
-            letters=letters+string.digits
-            apikey = ''.join(random.choice(letters) for i in range(64))
-            apis[apikey]=[user,row[2]]
-            #{'APIKEY':[Username,Role]}
-            print("[Debug Information] API KEY LIST = "+str(apis))
-            return {'value':apikey}
-        #else:
-            #pass
+    kernel=Kernel()
+    cor=kernel.checkuser(user,passwd)[0]
+    if cor:
+        row=kernel.checkuser(user,passwd)[1]
+    if cor:
+        global apis
+        cor=True
+        letters = string.ascii_letters
+        letters=letters+string.digits
+        apikey = ''.join(random.choice(letters) for i in range(64))
+        apis[apikey]=[user,row[2]]
+        #{'APIKEY':[Username,Role]}
+        print("[Debug Information] API KEY LIST = "+str(apis))
+        return {'value':apikey}
     if not cor:
         return {'value':'0x00000'}
+
 @apimodule.route('/chkuser/<username>/<password>/<role>')
 def checklogin(username,password,role):
-    hasher=Hashing()
-    sqlstr='select * from users'
-    cur=conn.execute(sqlstr)
-    rows=cur.fetchall()
     cor=False
+    kernel=Kernel()
     if role.lower()=="none":
-        for row in rows:
-            if hasher.check(password,row[1]) and username == row[0]:
-                global apis
-                #session["user"] = user
-                #session["role"] = row[2]
-                #gensession()
-                cor=True
-                return {'value':True}
-            #else:
-                #pass
+        cor=kernel.checkuser(username,password)[0]
+        if cor:
+            global apis
+            cor=True
+            return {'value':True}
         if not cor:
             return {'value':'PWINC'}
     else:
-        for row in rows:
-            if hasher.check(password,row[1]) and username == row[0] and role == row[2]:
-                global apis
-                #session["user"] = user
-                #session["role"] = row[2]
-                #gensession()
-                cor=True
-                return {'value':True}
-            elif hasher.check(password,row[1]) and username == row[0]:
-                return {'value':'RINC'}
-            #else:
-                #pass
+        cor=kernel.checkuser(username,password)[0]
+        if cor:
+            rcor=kernel.chkrole(username,role)
+        if cor and rcor:
+            global apis
+            return {'value':True}
+        elif cor and not rcor:
+            return {'value':'RINC'}
         if not cor:
             return {'value':'PWINC'}
+
 @apimodule.route('/getkey/<usrname>/<passwd>')
 def genapikey(usrname,passwd):
     return jsonify(genapi(usrname,passwd))

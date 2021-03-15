@@ -1,3 +1,5 @@
+Copyright Notice For Meow Tech Codenamed "Central" Community Edition
+
 Eclipse Public License - v 2.0
 
     THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
@@ -125,10 +127,10 @@ Contributor.
      ii) effectively excludes on behalf of all other Contributors all
      liability for damages, including direct, indirect, special,
      incidental and consequential damages, such as lost profits;
-
+    
      iii) does not attempt to limit or alter the recipients' rights
      in the Source Code under section 3.2; and
-
+    
      iv) requires any subsequent distribution of the Program by any
      party to be under a license that satisfies the requirements
      of this section 3.
