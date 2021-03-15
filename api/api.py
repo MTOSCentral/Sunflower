@@ -28,7 +28,7 @@ def genapi(user,passwd):
         letters = string.ascii_letters
         letters=letters+string.digits
         apikey = ''.join(random.choice(letters) for i in range(64))
-        apis[apikey]=[user,row[2]]
+        apis[apikey]=user
         #{'APIKEY':[Username,Role]}
         print("[Debug Information] API KEY LIST = "+str(apis))
         return {'value':apikey}
@@ -63,69 +63,46 @@ def checklogin(username,password,role):
 def genapikey(usrname,passwd):
     return jsonify(genapi(usrname,passwd))
 # /addmoney/adult/Add/Child
-@apimodule.route('/addmoney/<apikey>/<int:var1>/<var2>')
-def addmoney(apikey,var1,var2):
+@apimodule.route('/addmoney/<apikey>/<int:var1>/<var2>/<var3>')
+def addmoney(apikey,var1,var2,var3):
     global apis
+    kernel=Kernel()
     if apikey in apis:
-        if apis[apikey][1] == "adult":
+        if kernel.chkrole(apis[apikey],"adult"):
             child=var2
             money=var1
-            sqlstr='select * from users'
-            cur=conn.execute(sqlstr)
-            rows=cur.fetchall()
-            nowdollar="D"
-            for row in rows:
-                # print('RAN USER='+session['user'])
-                if row[0] == child and row[2]=="child":
-                    #print(row[3])
-                    #print("--------")
-                    nowdollar=row[3]
-                    #print(nowdollar)
-                
-            if nowdollar == "D":
+            notes=var3
+            tmp=kernel.addmoney(child,apis[apikey],"adult",money,notes)
+            print(tmp)
+            if tmp=="0x0002":
                 return jsonify({"value":"0x00003"})
-            else:
-                cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)+int(money))+'" WHERE Name="'+child+'"'
-                curs = conn.cursor()
-                curs.execute(cmd)
-                conn.commit()
+            elif tmp==None:
                 return jsonify({"value":"Completed"})
+                apis.pop(apikey)
         else:
             return jsonify({"value":"0x00001"})
             #apis.pop(apikey)
     else:
         return jsonify({'value':'0x00002'})
 
-@apimodule.route('/minus/<apikey>/<int:var1>/<var2>')
-def minus(apikey,var1,var2):
+@apimodule.route('/removemoney/<apikey>/<int:var1>/<var2>/<var3>')
+def minus(apikey,var1,var2,var3):
     global apis
+    kernel=Kernel()
     if apikey in apis:
-        if apis[apikey][1] == "adult":
+        if kernel.chkrole(apis[apikey],"adult"):
             child=var2
             money=var1
-            sqlstr='select * from users'
-            cur=conn.execute(sqlstr)
-            rows=cur.fetchall()
-            nowdollar="D"
-            for row in rows:
-                # print('RAN USER='+session['user'])
-                if row[0] == child and row[2]=="child":
-                    #print(row[3])
-                    #print("--------")
-                    nowdollar=row[3]
-                    #print(nowdollar)
-                
-            if nowdollar == "D":
+            notes=var3
+            tmp=kernel.removemoney(child,apis[apikey],"adult",money,notes)
+            print(tmp)
+            if tmp=="0x0002":
                 return jsonify({"value":"0x00003"})
-            else:
-                cmd='UPDATE users SET "Money" = "'+str(int(nowdollar)-int(money))+'" WHERE Name="'+child+'"'
-                curs = conn.cursor()
-                curs.execute(cmd)
-                conn.commit()
+            elif tmp==None:
                 return jsonify({"value":"Completed"})
+                apis.pop(apikey)
         else:
             return jsonify({"value":"0x00001"})
             #apis.pop(apikey)
     else:
         return jsonify({'value':'0x00002'})
-
