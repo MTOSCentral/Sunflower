@@ -10,6 +10,7 @@ import base64
 from passwordencryption import EncryptPass
 from datetime import datetime
 from datetime import timedelta
+import time
 from werkzeug.utils import secure_filename
 from UnpackUpdate import Update
 brandinfo={}
@@ -33,9 +34,10 @@ def stepui():
         f = request.files['file']
         f.save(secure_filename("updates_"+f.filename))
         UD=Update()
-        UD.update("updates_"+f.filename)
-        return "Uploaded"
+        a=UD.update("updates_"+f.filename.replace(".cudp",""))
+        return render_template("nano/complete.html",version=a)
     else:
         return render_template("nano/upload.html",productname=productname,year=year)
+    
 if __name__ == "__main__":
 	app.run(port=8888, debug=True)
