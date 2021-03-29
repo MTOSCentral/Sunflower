@@ -10,3 +10,4 @@ python-dotenv==0.15.0
 Werkzeug==1.0.1
 cryptography
 pycrypto
+tabulate

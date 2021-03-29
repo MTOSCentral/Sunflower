@@ -1,14 +1,17 @@
 {% extends "nano/base.html" %}
-{% block webtitle %}Money Action{% endblock %}
+{% block webtitle %}{{action}} Money - {{productname}}{% endblock %}
 {% block productname %}{{productname}}{% endblock %}
 {% block body %}
     <form action="#" method="post">
+        <h2>{{action}} Money</h2>
         <lable>Please Enter The Amount Of Money:</lable>
-        <input type="number" name="dollars" class="w-75 form-control input-normal"/>
+        <input type="number" name="dollars" class="w-75 form-control input-normal" required=true />
         <lable>Please The Child's Username</lable>
-        <input name="child" class="w-75 form-control input-normal"/>
+        <input name="child" class="w-75 form-control input-normal" required=true/>
+        <label for="notes">Notes</label>
+        <input name="notes" id="notes" class="w-75 form-control input-normal" required=true/>
         <br>
-        <input type="submit" value="Continue" class="btn btn-primary"/>
+        <input type="submit" value="{{action}}" class="btn btn-primary"/>
     </form>
 {% endblock %}
-{% block footer %}Copyright (c) {{productname}} {{year}}, all rights reserved.{% endblock %}
+{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}
