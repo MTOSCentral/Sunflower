@@ -32,7 +32,7 @@ jobs:
           python-version: 3.9
           # The target architecture (x86, x64) of the Python interpreter.
           # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
-      - id: files
+      - name: Update Files
         uses: jitterbit/get-changed-files@v1
       - run: |
           mkdir changed
@@ -51,3 +51,15 @@ jobs:
         env:
           DEV_ENV_FILE : ${{secrets.PUB_KEY}}
           DEV_ENV_FILE2 : ${{secrets.SCRIPT}}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_name: MTOSCentral/Sunflower
+          # A personal access token for the GitHub repository in which the release will be created and edited.
+          # It is recommended to create the access token with the following scopes: `repo, user, admin:repo_hook`.
+          repo_token: ${{ secrets.YOUR_PERSONAL_ACCESS_TOKEN }}
+          file: changed.mupd
+          asset_name: changed.mupd
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Auto CI"
