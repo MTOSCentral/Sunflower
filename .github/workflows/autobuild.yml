@@ -1,0 +1,83 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Building Update Packages
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.1
+        with:
+          # Version range or exact version of a Python version to use, using SemVer's version range syntax.
+          python-version: 3.9
+          # The target architecture (x86, x64) of the Python interpreter.
+          # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
+      - name: Update Files
+        uses: jitterbit/get-changed-files@v1
+      - run: |
+          mkdir changed
+          ls
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            cp -r ${changed_file} changed/${changed_file} 2>/dev/null || :
+            echo "Do something with this ${changed_file}."
+          done
+      - name: Encrypting Files
+        run: |
+          pip3 install python-gnupg
+          echo "$DEV_ENV_FILE" >> mykeyfile.pub
+          echo "$DEV_ENV_FILE2" >> script.py
+          gpg --import mykeyfile.pub
+          python3 script.py
+        env:
+          DEV_ENV_FILE : ${{secrets.PUB_KEY}}
+          DEV_ENV_FILE2 : ${{secrets.SCRIPT}}
+      
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD-HHmmSS
+          utcOffset: "+08:00"
+          
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v1.0_autobuild
+          release_name: Release ${{ steps.current-time.outputs.formattedTime }}
+          body: |
+            Auto Build by github actions.
+          prerelease: false
+          draft: false
+      - name: Upload Binaries To Release
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./changed.cudp
+          asset_name: patch_${{ steps.current-time.outputs.formattedTime }}.cudp
+          asset_content_type: application/update
