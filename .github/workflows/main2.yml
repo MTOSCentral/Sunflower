@@ -56,7 +56,7 @@ jobs:
         uses: 1466587594/get-current-time@v2
         id: current-time
         with:
-          format: YYYYMMDD-HHMM
+          format: YYYYMMDD-HHmmSS
           utcOffset: "+08:00"
           
       - name: Create Release
@@ -76,8 +76,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: "*.mupd"
-          tags: true
-          draft: true
           release_id: ${{ steps.create_release.outputs.id }}
           overwrite: true
-          verbose: false
+          verbose: true
