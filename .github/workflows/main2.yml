@@ -42,7 +42,6 @@ jobs:
             echo "Do something with this ${changed_file}."
           done
       - name: Encrypting Files
-        uses: jitterbit/get-changed-files@v1
         run: |
           echo $DEV_ENV_FILE >> key.pub
         env:
