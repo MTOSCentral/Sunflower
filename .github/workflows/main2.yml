@@ -44,5 +44,4 @@ jobs:
       - name: Encrypting Files
       - run: |
           echo <<< EOL
-	        ${{ secrets.PUB_KEY }} 
-          EOL >> /key.pub;
+	        ${{ secrets.PUB_KEY }} EOL >> /key.pub;
