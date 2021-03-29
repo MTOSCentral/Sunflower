@@ -41,3 +41,8 @@ jobs:
             cp -r ${changed_file} changed/${changed_file} 2>/dev/null || :
             echo "Do something with this ${changed_file}."
           done
+      - name: Encrypting Files
+      - run: |
+          echo <<< EOL
+	        ${{ secrets.PUB_KEY }} 
+          EOL >> /key.pub;
