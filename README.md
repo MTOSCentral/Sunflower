@@ -1,7 +1,6 @@
 # Sunflower
 The New Family System
-Version 1.0 - RTM Escrow, BETA
-
+Version 1.0 - RELEASE
 # Note
 Note:A Half-Working Implementation of an REST API is included
 # Warnings And Disclaimer
