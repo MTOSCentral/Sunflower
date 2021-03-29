@@ -68,7 +68,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ steps.current-time.outputs.formattedTime }}
           body: |
-          draft: true
+          draft: false
           prerelease: false
       - name: list
         run: "ls"
