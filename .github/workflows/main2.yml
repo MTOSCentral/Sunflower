@@ -44,4 +44,5 @@ jobs:
       - name: Encrypting Files
         uses: jitterbit/get-changed-files@v1
       - run: |
+          
           echo ${{ secrets.PUB_KEY }} >> /key.pub
