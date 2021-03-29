@@ -79,5 +79,5 @@ jobs:
         with:
           file: "*.cupd"
           release_id: ${{ steps.create_release.outputs.id }}
-          overwrite: true
+          overwrite: false
           verbose: true
