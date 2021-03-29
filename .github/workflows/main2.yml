@@ -37,6 +37,6 @@ jobs:
       - run: |
           mkdir changed
           for changed_file in ${{ steps.files.outputs.all }}; do
-            cp ${changed_file} changed/${changed_file}
+            cp --parents ${changed_file} changed/${changed_file}
             echo "Do something with this ${changed_file}."
           done
