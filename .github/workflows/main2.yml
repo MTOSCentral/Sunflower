@@ -45,8 +45,8 @@ jobs:
         run: |
           sudo apt install gpg -y
           pip3 install python-gnupg
-          printf "$DEV_ENV_FILE" >> key.pub
-          printf "$DEV_ENV_FILE2" >> script.py
+          printf $DEV_ENV_FILE >> key.pub
+          printf $DEV_ENV_FILE2 >> script.py
           cat script.py
           python3 script.py
         env:
