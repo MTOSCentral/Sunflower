@@ -38,6 +38,6 @@ jobs:
           mkdir changed
           ls
           for changed_file in ${{ steps.files.outputs.all }}; do
-            cp -r ${changed_file} changed/${changed_file}
+            cp -r ${changed_file} changed/${changed_file} 2>/dev/null || :
             echo "Do something with this ${changed_file}."
           done
