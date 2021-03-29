@@ -68,7 +68,9 @@ jobs:
           tag_name: v1.0_auto
           release_name: Release ${{ steps.current-time.outputs.formattedTime }}
           body: |
+            Auto Build by github actions.
           prerelease: false
+          draft: false
       - name: list
         run: "ls"
       - name: Upload binaries to release
