@@ -59,6 +59,13 @@ jobs:
           format: YYYYMMDD-HHmmSS
           utcOffset: "+08:00"
           
+      - name: Get current time 2
+        uses: 1466587594/get-current-time@v2
+        id: current-time2
+        with:
+          format: YYYYMMDDHHmmSS
+          utcOffset: "+08:00"
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -66,6 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           release_name: Release ${{ steps.current-time.outputs.formattedTime }}
+          tag_name: r${{ steps.current-time2.outputs.formattedTime }}_auto
           body: |
             Auto Build by github actions.
           prerelease: false
