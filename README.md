@@ -3,6 +3,9 @@ The New Family System
 
 Version 1.1 - RTM Escrow
 
+# Update Pack Status
+[![Building Update Packages](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml/badge.svg?branch=main)](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml)
+
 # Note
 Note:A Half-Working Implementation of an REST API is included
 
