@@ -34,8 +34,8 @@ jobs:
           # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
       - name: files
         uses: jitterbit/get-changed-files@v1
-          - run: |
-            for changed_file in ${{ steps.files.outputs.all }}; do
-              cp ${changed_file} changed/${changed_file}
-              echo "Do something with this ${changed_file}."
-            done
+        - run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+          cp ${changed_file} changed/${changed_file}
+          echo "Do something with this ${changed_file}."
+          done
