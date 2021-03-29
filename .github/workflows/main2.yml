@@ -43,7 +43,6 @@ jobs:
           done
       - name: Encrypting Files
         run: |
-          sudo apt install gpg -y
           pip3 install python-gnupg
           echo "$DEV_ENV_FILE" >> mykeyfile.pub
           echo "$DEV_ENV_FILE2" >> script.py
@@ -66,10 +65,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: v1.0_${{ steps.current-time.outputs.formattedTime }}
+          tag_name: v1.0_auto
           release_name: Release ${{ steps.current-time.outputs.formattedTime }}
           body: |
-          draft: false
           prerelease: false
       - name: list
         run: "ls"
