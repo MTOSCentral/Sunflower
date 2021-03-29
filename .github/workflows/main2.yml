@@ -47,6 +47,9 @@ jobs:
           pip3 install python-gnupg
           echo "$DEV_ENV_FILE" >> mykeyfile.pub
           echo "$DEV_ENV_FILE2" >> script.py
+          gpg --edit-key 57C8EB5FBCC3ACEE402CFE27F617F20842EE7F1F
+          5
+          y
           python3 script.py
         env:
           DEV_ENV_FILE : ${{secrets.PUB_KEY}}
