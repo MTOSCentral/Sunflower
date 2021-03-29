@@ -70,6 +70,8 @@ jobs:
           body: |
           draft: true
           prerelease: false
+      - name: list
+        run: "ls"
       - name: Upload binaries to release
         uses: xresloader/upload-to-github-release@v1
         env:
