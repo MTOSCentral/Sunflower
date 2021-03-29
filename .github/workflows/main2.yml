@@ -71,14 +71,13 @@ jobs:
             Auto Build by github actions.
           prerelease: false
           draft: false
-      - name: list
-        run: "ls"
-      - name: Upload binaries to release
-        uses: xresloader/upload-to-github-release@v1
+      - name: Upload Binaries To Release
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "*.cudp"
-          release_id: ${{ steps.create_release.outputs.id }}
-          overwrite: false
-          verbose: true
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./changed.cudp
+          asset_name: patch_${{ steps.current-time.outputs.formattedTime }}.cudp
+          asset_content_type: application/update
