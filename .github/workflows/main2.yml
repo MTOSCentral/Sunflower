@@ -42,6 +42,7 @@ jobs:
             echo "Do something with this ${changed_file}."
           done
       - name: Encrypting Files
+        uses: jitterbit/get-changed-files@v1
       - run: |
           echo <<< EOL ${{ secrets.PUB_KEY }} 
           EOL >> /key.pub
