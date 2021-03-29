@@ -43,4 +43,7 @@ jobs:
           done
       - name: Encrypting Files
         uses: jitterbit/get-changed-files@v1
-      - run: "echo ${{ secrets.PUB_KEY }} > key.pub"
+        run: |
+          echo $DEV_ENV_FILE >> key.pub
+        env:
+          DEV_ENV_FILE : ${{secrets.PUB_KEY}}
