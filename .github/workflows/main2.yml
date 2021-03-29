@@ -51,8 +51,14 @@ jobs:
         env:
           DEV_ENV_FILE : ${{secrets.PUB_KEY}}
           DEV_ENV_FILE2 : ${{secrets.SCRIPT}}
-      - name: Set current date as env variable
-        run: echo "NOW::$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD-HHMM
+          utcOffset: "+08:00"
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -60,7 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release $NOW
+          release_name: Release ${{ steps.current-time.outputs.formattedTime }}
           body: |
           draft: true
           prerelease: false
