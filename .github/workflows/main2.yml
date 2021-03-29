@@ -32,10 +32,10 @@ jobs:
           python-version: 3.9
           # The target architecture (x86, x64) of the Python interpreter.
           # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
-      - name: files
+      - id: files
         uses: jitterbit/get-changed-files@v1
-        - run: |
+      - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
-          cp ${changed_file} changed/${changed_file}
-          echo "Do something with this ${changed_file}."
+            cp ${changed_file} changed/${changed_file}
+            echo "Do something with this ${changed_file}."
           done
