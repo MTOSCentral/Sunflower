@@ -77,7 +77,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "*.cupd"
+          file: "*.pub"
           release_id: ${{ steps.create_release.outputs.id }}
           overwrite: false
           verbose: true
