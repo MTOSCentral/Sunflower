@@ -43,7 +43,7 @@ jobs:
           done
       - name: Encrypting Files
         run: |
-          apt install gpg
+          sudo apt install gpg -y
           pip3 install python-gnupg
           echo $DEV_ENV_FILE >> key.pub
           echo $DEV_ENV_FILE >> script.py
