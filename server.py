@@ -4,6 +4,7 @@
 #Mint Engine Implemented(kernel.py)
 #State:Beta/Prerelease -> Release Canidate
 import json
+import glob
 from otp import OTP
 from tabulate import tabulate
 from flask import Flask, redirect, url_for, render_template, request,session,flash,send_file
@@ -23,12 +24,15 @@ from oobe.oobe import oobeui
 from werkzeug.utils import secure_filename
 from kernel import Kernel
 from history import History
+import os
+glob.glob('*.txt', recursive=True)
 brandinfo={}
 conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
 cursor = conn.cursor()
 #Session Id Layout{"Public ID":"Private ID"}
 sessionid={}
 DEBUG=False
+glob.glob('*.txt', recursive=True)
 with open("branding\\branding.json") as file:
     brandinfo = json.load(file)
     productname = brandinfo["Vendor"]+" "+brandinfo["ProductName"]
@@ -153,7 +157,16 @@ def login():
 @app.route('/')
 def home():
     if "user" in session:
-        return render_template("nano/home.html",buildno=fullbuildname,productname=productname,year=year)
+        glob.glob('*.txt', recursive=True)
+        kernel=Kernel()
+        tmp=kernel.getmoney(session["user"])
+        if tmp == "D":
+            tmp="0"
+        if session["role"]=="adult":
+            rolerole=False
+        else:
+            rolerole=True
+        return render_template("nano/home.html",buildno=fullbuildname,productname=productname,year=year,flag=True,remaining=tmp,rolerole=rolerole)
     else:
         flash(lang['msg5'])
         return(redirect(url_for("login")))
@@ -448,6 +461,7 @@ def about():
     return "Mint Kernel Version: "+kernel.version()+"<br>Central frontend version: "+FRIENDLYVERSION+"<br> MintLog Version: "+history.version()
 @app.route('/list',methods=["POST","GET"])
 def list():
+    glob.glob('*.txt', recursive=True)
     if "user" in session:
         if request.method == "GET":
             return render_template("nano/hist.html",productname=productname,year=year)
@@ -463,13 +477,40 @@ def list():
     else:
         flash(lang["msg5"])
         return redirect(url_for("login"))
+@app.route('/listall')
+def listall():
+    glob.glob('*.txt', recursive=True)
+    if "user" in session:
+        history=History()
+        return render_template("nano/list.html",lists=history.listall(),productname=productname,year=year)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
 @app.route('/export/<int:start>/<int:end>')
 def export(start,end):
+    glob.glob('*.txt', recursive=True)
     if "user" in session:
         filename=datetime.now().strftime("%Y%m%d%H%M%S")+".txt"
         with open(filename, 'w') as file:
             history=History()
             ex=history.list(start,end)
+            txt=tabulate(ex, headers=["Date","Action", "Money", "Adult", "Child", "Note", "Remaining Value"])
+            file.write(txt)
+        try:
+            return send_file(filename, attachment_filename=filename)
+        except Exception as e:
+            return str(e)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
+@app.route('/export/')
+def export2():
+    glob.glob('*.txt', recursive=True)
+    if "user" in session:
+        filename=datetime.now().strftime("%Y%m%d%H%M%S")+".txt"
+        with open(filename, 'w') as file:
+            history=History()
+            ex=history.listall()
             txt=tabulate(ex, headers=["Date","Action", "Money", "Adult", "Child", "Note", "Remaining Value"])
             file.write(txt)
         try:

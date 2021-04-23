@@ -1,0 +1,12 @@
+{% extends "nano/base.html" %}
+{% block webtitle %}Dashboard - {{productname}}{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Your Pocket Money</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    </div>
+  </div>
+{% endblock %}
+{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "nano/base.html" %}
+{% block webtitle %}Add Or Remove Money{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Action</th>
+        <th scope="col">Money</th>
+        <th scope="col">Adult</th>
+        <th scope="col">Child</th>
+        <th scope="col">Note</th>
+        <th scope="col">Remaining Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for n in lists %}
+      <tr>
+        <td>{{n[0]}}</td>
+        <td>{{n[1]}}</td>
+        <td>{{n[2]}}</td>
+        <td>{{n[3]}}</td>
+        <td>{{n[4]}}</td>
+        <td>{{n[5]}}</td>
+        <td>{{n[6]}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+<button class="btn btn-primary" onclick="location.href='/export/{{startingdate}}/{{endingdate}}'">Export</button>
+{% endblock %}
+{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

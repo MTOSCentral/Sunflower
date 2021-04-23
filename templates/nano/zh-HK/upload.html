@@ -1,0 +1,71 @@
+{% extends "nano/base_setup.html" %}
+{% block webtitle %}{{productname}} System Update{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+   <body>
+      <div id="loading">
+         <img src="/static/banner.png" style="vertical-align:left" width=260 height=120>
+         <h1>Update Firmware</h1>
+         <img src="/static/updating.gif" style="vertical-align:middle" width=100 height=100>
+         <h4>Installing Update.....</h4>
+         <h2>Required Time:Calculating</h2>
+      </div>
+      <div id="content">
+         <form action = "#" method = "POST" 
+            enctype = "multipart/form-data">
+            <label for="file">Browse Updates</label>
+            <label class="btn btn-primary">
+               Browse <input type="file" name="file" style="display: none;" accept=".cudp" required onchange='uploadFile(this)'>
+            </label>
+            <a id="file-name">You Have Not Uploaded Any Files</a>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Update" onclick="loading();"/>
+         </form>   
+      </div>
+   </body>
+   <script>
+      function checkfile(sender) {
+         // 可接受的附檔名
+         var validExts = new Array(".cudp");
+         var fileExt = sender.value;
+         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+         if (validExts.indexOf(fileExt) < 0) {
+            alert("You Must Upload A Falid Update File.");
+            sender.value = null;
+            return false;
+         }
+         else return true;
+      }
+      function uploadFile(target) {
+         var answ = checkfile(target);
+         if (answ){
+            document.getElementById("file-name").innerHTML = target.files[0].name;
+         }
+         else{
+            document.getElementById("file-name").innerHTML = "You Have Not Uploaded Any Files";
+            document.getElementById("file").value = "";
+         }
+      }
+      function loading(){
+            $("#loading").show();
+            $("#content").hide();       
+      }
+   </script>
+   <style>
+      div#loading {
+         display: none;
+         cursor: wait;
+         text-align:center;
+      }
+      img{
+          vertical-align:middle;
+      }
+      span{
+          vertical-align:middle;
+      }
+      img{
+          vertical-align:middle;
+      }
+   </style>
+{% endblock %}
+{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}
