@@ -1,7 +1,12 @@
 # Sunflower
 The New Family System
 
-Version 1.1 - RTM Escrow
+Sunflower Version 1.1.0 LTS
+
+# Supported Versions
+Sunflower Version 1.1.0 LTS
+Sunflower Version 1.5.0 Alpha
+Sunflower Version 2.0.0 Int
 
 # Update Pack Status
 [![Building Update Packages](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml/badge.svg?branch=main)](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml)
