@@ -9,5 +9,5 @@ psutil==5.8.0
 python-dotenv==0.15.0
 Werkzeug==1.0.1
 cryptography
-pycrypto
+pycryptodome
 tabulate
