@@ -1,21 +1,21 @@
 {% extends "nano/base.html" %}
-{% block webtitle %}Add Or Remove Money{% endblock %}
+{% block webtitle %}{{strings(11)}} - {{productname}}{% endblock %}
 {% block productname %}{{productname}}{% endblock %}
 {% block body %}
 {% if flag == False %}
-    {{productname}} Build {{buildno}}
+    {{productname}} {{strings(12)}} {{buildno}}
 {% else %}
     <div class="main">
-        <h2>Welcome To {{productname}}<sup>Preview</sup></h2>
+        <h2>{{strings(14)}} {{productname}}</h2>
         {% if rolerole %}
-            <h3>Your remaining value:</h3>
+            <h3>{{strings(13)}}:</h3>
             <p>${{remaining}}</p>
         {% endif %}
         <br>
         <br>
-        <a href="addmoney" class="btn btn-primary">Add Money</a>
-        <a href="removemoney" class="btn btn-primary">Remove Money</a>
-        <a href="list" class="btn btn-primary">History</a>
+        <a href="addmoney" class="btn btn-primary">{{strings("Add")}} {{strings(2)}}</a>
+        <a href="removemoney" class="btn btn-primary">{{strings("Remove")}} {{strings(2)}}</a>
+        <a href="list" class="btn btn-primary">{{strings(6)}}</a>
     </div>
     <style>
         .main{

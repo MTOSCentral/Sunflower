@@ -1,8 +1,0 @@
-{% extends "nano/base.html" %}
-{% block webtitle %}Add Or Remove Money{% endblock %}
-{% block productname %}{{productname}}{% endblock %}
-{% block body %}
-<h1>OTP QR GEN</h1>
-<img src="{{ qrcode(toqr) }}" width="256px" height="256px"/>
-{% endblock %}
-{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

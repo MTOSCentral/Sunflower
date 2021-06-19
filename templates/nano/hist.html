@@ -1,16 +1,16 @@
 {% extends "nano/base.html" %}
-{% block webtitle %}History - {{productname}}{% endblock %}
+{% block webtitle %}{{strings(6)}} - {{productname}}{% endblock %}
 {% block productname %}{{productname}}{% endblock %}
 {% block body %}
     <form action="#" 
     method="post">
-        <h2>Get History</h2>
-        <lable>Please Enter Starting Date (yyyy-mm-dd):</lable>
+        <h2>{{strings(6)}}</h2>
+        <lable>{{strings(7)}} (yyyy-mm-dd):</lable>
         <input name="start" class="w-50 form-control input-normal" required=true />
-        <lable>Please Enter Ending Date (yyyy-mm-dd):</lable>
+        <lable>{{strings(8)}} (yyyy-mm-dd):</lable>
         <input name="end" class="w-50 form-control input-normal" required=true />
-        <input type="submit" value="OK" class="btn btn-primary"/>
-        <a class="btn btn-primary" href="/listall">Show All History</a>
+        <input type="submit" value="{{strings(9)}}" class="btn btn-primary"/>
+        <a class="btn btn-primary" href="/listall">{{strings(10)}} {{strings(6)}}</a>
     </form>
 {% endblock %}
 {% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

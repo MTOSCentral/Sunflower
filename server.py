@@ -45,6 +45,10 @@ with open("lang\\zh-HK.json",encoding="utf-8") as file:
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
+#Implement CFGs - Coming v1.6
+#Language Pack Support
+#Assuming Setup Using OOBE.
+#End Of Language Pack Support
 app = Flask(__name__)
 QRcode(app)
 app.register_blueprint(apimodule, url_prefix="/api")
@@ -56,8 +60,24 @@ app.permanent_session_lifetime = timedelta(days=10)
 build="0300"
 branch="rs_rc1.210211"
 fullbuildname=build+"."+branch
-FRIENDLYVERSION="1.2.0_PRERELEASE"
+FRIENDLYVERSION="1.5.0_PRERELEASE"
 hasher=Hashing()
+#DO NOT HARDCODE
+langname="zh-HK.langpck"
+def langpack_rd():
+    global productname
+    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+        jl=json.loads(f.read())
+        ovr=jl["overrideproductname"]
+        if ovr == "1":
+            productname=jl["0"]
+langpack_rd()
+def langpack(strcode):
+    global langname
+    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+        strings=json.loads(f.read())[str(strcode)]
+    return strings
+app.jinja_env.globals.update(strings=langpack)
 @app.route('/license')
 def license():
     return render_template("nano/license.html",productname=productname,year=year,license=license1)

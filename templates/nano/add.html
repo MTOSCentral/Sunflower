@@ -3,15 +3,15 @@
 {% block productname %}{{productname}}{% endblock %}
 {% block body %}
     <form action="#" method="post">
-        <h2>{{action}} Money</h2>
-        <lable>Please Enter The Amount Of Money:</lable>
+        <h2>{{strings(action)}} {{ strings(2) }}</h2>
+        <lable>{{ strings(3) }}:</lable>
         <input type="number" name="dollars" class="w-75 form-control input-normal" required=true />
-        <lable>Please The Child's Username</lable>
+        <lable>{{ strings(4) }}</lable>
         <input name="child" class="w-75 form-control input-normal" required=true/>
-        <label for="notes">Notes</label>
+        <label for="notes">{{ strings(5) }}</label>
         <input name="notes" id="notes" class="w-75 form-control input-normal" required=true/>
         <br>
-        <input type="submit" value="{{action}}" class="btn btn-primary"/>
+        <input type="submit" value="{{strings(action)}}" class="btn btn-primary"/>
     </form>
 {% endblock %}
 {% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}
