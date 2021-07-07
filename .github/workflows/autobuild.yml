@@ -38,7 +38,7 @@ jobs:
           mkdir changed
           ls
           for changed_file in ${{ steps.files.outputs.all }}; do
-            cp -r ${changed_file} changed/${changed_file} 2>/dev/null || :
+            cp -r "${changed_file}" "changed/${changed_file}" 2>/dev/null || :
             echo "Do something with this ${changed_file}."
           done
       - name: Encrypting Files
@@ -59,14 +59,21 @@ jobs:
           format: YYYYMMDD-HHmmSS
           utcOffset: "+08:00"
           
+      - name: Get current time 2
+        uses: 1466587594/get-current-time@v2
+        id: current-time2
+        with:
+          format: YYYYMMDDHHmmSS
+          utcOffset: "+08:00"
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: v1.0_autobuild
           release_name: Release ${{ steps.current-time.outputs.formattedTime }}
+          tag_name: r${{ steps.current-time2.outputs.formattedTime }}_auto
           body: |
             Auto Build by github actions.
           prerelease: false
