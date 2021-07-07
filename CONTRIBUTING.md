@@ -1,1 +1,1 @@
-# Contributing to Central
+# Contributing to Sunflower
