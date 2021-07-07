@@ -9,20 +9,21 @@ import sqlite3
 from flask import json
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import os
 oobeui=Blueprint("oobe", __name__, static_folder="static", template_folder="template")
-conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
+conn =sqlite3.connect('database'+os.sep+'users.sql', check_same_thread=False)
 cursor = conn.cursor()
 year = datetime.now().strftime('%Y')
 hasher=Hashing()
 all_steps=['License Agreement','User Accounts']
 links=['/','/setup']
-with open("branding\\branding.json") as file:
+with open("branding"+os.sep+"branding.json") as file:
     brandinfo = json.load(file)
     productname = brandinfo["Vendor"]+" "+brandinfo["ProductName"]
     lc=brandinfo["License"]
     print(productname)
     file.close()
-with open("lang\\zh-HK.json",encoding="utf-8") as file:
+with open("lang"+os.sep+"zh-HK.json",encoding="utf-8") as file:
     lang = json.load(file)
     file.close()
 with open(lc,encoding="utf-8") as file:
@@ -49,7 +50,7 @@ def start():
                 #session.pop('stepoobe')
                 pass
             return render_template("nano/license2.html",productname=productname,year=year,license=license1,steps=all_steps,current=all_steps[0],link=links)
-        #conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
+        #conn =sqlite3.connect('database"+os.sep+"users.sql', check_same_thread=False)
         #cursor = conn.cursor()
     else:
         if request.method == 'GET':

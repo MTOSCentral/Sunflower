@@ -21,30 +21,37 @@ from passwordencryption import EncryptPass
 from datetime import datetime
 from datetime import timedelta
 from oobe.oobe import oobeui
+#9D0ULT8W6I
+from settings.settings import settingsui
 from werkzeug.utils import secure_filename
 from kernel import Kernel
 from history import History
 import os
 glob.glob('*.txt', recursive=True)
 brandinfo={}
-conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
-cursor = conn.cursor()
+#Obselete Code Leftovers
+#conn =sqlite3.connect('database'+os.sep+'users.sql', check_same_thread=False)
+#cursor = conn.cursor()
+#End Of Obselete Code Leftovers
 #Session Id Layout{"Public ID":"Private ID"}
 sessionid={}
 DEBUG=False
 glob.glob('*.txt', recursive=True)
-with open("branding\\branding.json") as file:
+with open("branding"+os.sep+"branding.json") as file:
     brandinfo = json.load(file)
     productname = brandinfo["Vendor"]+" "+brandinfo["ProductName"]
     lc=brandinfo["License"]
     print(productname)
     file.close()
-with open("lang\\zh-HK.json",encoding="utf-8") as file:
+with open("lang"+os.sep+"zh-HK.json",encoding="utf-8") as file:
     lang = json.load(file)
     file.close()
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
+with open("internal.config",encoding="utf-8") as internal:
+    enablefeatures=json.load(internal)["EnableFeatures"]
+    internal.close()
 #Implement CFGs - Coming v1.6
 #Language Pack Support
 #Assuming Setup Using OOBE.
@@ -53,20 +60,30 @@ app = Flask(__name__)
 QRcode(app)
 app.register_blueprint(apimodule, url_prefix="/api")
 app.register_blueprint(oobeui, url_prefix="/oobe")
+#Internal Feature 9D0ULT8W6I
+if "9D0ULT8W6I" in enablefeatures:
+    if enablefeatures["9D0ULT8W6I"] == "0":
+        app.register_blueprint(settingsui, url_prefix="/settings")
 app.secret_key="ThEMoSTSeCuRePassWORdINThEWorLD"
 app.static_folder = 'static'
 year = datetime.now().strftime('%Y')
 app.permanent_session_lifetime = timedelta(days=10)
-build="0300"
-branch="rs_rc1.210211"
-fullbuildname=build+"."+branch
-FRIENDLYVERSION="1.5.0_PRERELEASE"
+fullbuildname="0000.unreleased"
+FRIENDLYVERSION="0.0.0_UNRELEASED"
 hasher=Hashing()
+def init():
+    with open("sunflowerver.cfg") as vercfg1:
+        versionconfig=json.loads(vercfg1.read())
+        global fullbuildname
+        global FRIENDLYVERSION
+        fullbuildname=versionconfig['SunflowerMajVer']+"."+versionconfig['SunflowerMinVer']+versionconfig["SunflowerBuild"]
+        FRIENDLYVERSION=versionconfig['SunflowerFriendlyVer']
+init()
 #DO NOT HARDCODE
 langname="zh-HK.langpck"
 def langpack_rd():
     global productname
-    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+    with open(f"langpck"+os.sep+f"{langname}"+os.sep+"strings.sf.json","r", encoding='utf-8') as f:
         jl=json.loads(f.read())
         ovr=jl["overrideproductname"]
         if ovr == "1":
@@ -74,7 +91,7 @@ def langpack_rd():
 langpack_rd()
 def langpack(strcode):
     global langname
-    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+    with open(f"langpck"+os.sep+f"{langname}"+os.sep+"strings.sf.json","r", encoding='utf-8') as f:
         strings=json.loads(f.read())[str(strcode)]
     return strings
 app.jinja_env.globals.update(strings=langpack)
@@ -98,16 +115,16 @@ def regen():
     sessionid[session["sessionid"]]=pri
     #print("2nd"+str(sessionid))
 def chklogin(user,pw):
-    global conn
+    #global conn
     cor=False
     if "a" == "a":
         hasher=Hashing()
         session.permanent = True
         user = user
         passwd = pw
-        sqlstr='select * from users'
-        cur=conn.execute(sqlstr)
-        rows=cur.fetchall()
+        #sqlstr='select * from users'
+        #cur=conn.execute(sqlstr)
+        #rows=cur.fetchall()
         #print(rows)
         #print(rows[5][0])
         kernel=Kernel()
@@ -119,10 +136,8 @@ def chklogin(user,pw):
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    global conn
-    stmt = """SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';"""
-    cur=conn.execute(stmt)
-    result = cur.fetchone()
+    kernel=Kernel()
+    result=kernel.isnew()
     if result[0] == 0:
         flash("Your Server Haven't Been Setup Yet.")
         return redirect(url_for("oobe.start"))
@@ -238,7 +253,7 @@ def debugmode():
         else:
             return sessionid[session["sessionid"]]
     else:
-        flash("Error!You T")
+        flash(lang["msg6"])
         return redirect(url_for("home"))
 
 def popadds():
@@ -260,9 +275,9 @@ def addmoney():
         if role != "!!":
             if role:
                 child=request.form["child"]
-                sqlstr='select * from users'
-                cur=conn.execute(sqlstr)
-                rows=cur.fetchall()
+                #sqlstr='select * from users'
+                #cur=conn.execute(sqlstr)
+                #rows=cur.fetchall()
                 nowdollar=kernel.getmoney(child)
                 if nowdollar == "D":
                     flash("The child account you entered either is not an valid account or is not a child.")

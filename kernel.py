@@ -3,11 +3,12 @@ import sqlite3
 from hashing import Hashing
 from history import History
 from datetime import datetime
-VERSION="1.0.5_hist"
+import os
+VERSION="1.0.6_hist"
 class Kernel:
     def __init__(self):
         #print("Mint Engine")
-        self.conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
+        self.conn =sqlite3.connect('database'+os.sep+'users.sql', check_same_thread=False)
         self.cursor = self.conn.cursor()
     def version(self):
         global VERSION
@@ -145,6 +146,11 @@ class Kernel:
             return nowdollar
     def isreal(self):
         return True
+    def isnew(self):
+        stmt = """SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';"""
+        cur=self.conn.execute(stmt)
+        result = cur.fetchone()
+        return result
 """
 Meow Tech Mint - Kernel For The Central System
 Central System Has Been Modified To Use The Mint Core.
