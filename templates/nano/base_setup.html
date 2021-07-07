@@ -4,13 +4,13 @@
   <title>{% block webtitle %}{% endblock %}</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="static/css/bootstrap.min.css" />
-  <script src="static/js/jquery-3.5.1.slim.min.js"></script>
-  <script src="static/js/popper.min.js"></script>
-  <script src="static/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+  <script src="../static/js/jquery-3.5.1.slim.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">{% block productname %}{% endblock %}</a>
+    <a class="navbar-brand" href="#">{% block productname %}{% endblock %}<sup>Preview</sup></a>
     <ul class="nav nav-pills">
       {% for n in steps %}
         {% if n == current %}
