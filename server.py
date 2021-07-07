@@ -49,9 +49,6 @@ with open("lang"+os.sep+"zh-HK.json",encoding="utf-8") as file:
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
-with open("internal.config",encoding="utf-8") as internal:
-    enablefeatures=json.load(internal)["EnableFeatures"]
-    internal.close()
 #Implement CFGs - Coming v1.6
 #Language Pack Support
 #Assuming Setup Using OOBE.
@@ -60,10 +57,6 @@ app = Flask(__name__)
 QRcode(app)
 app.register_blueprint(apimodule, url_prefix="/api")
 app.register_blueprint(oobeui, url_prefix="/oobe")
-#Internal Feature 9D0ULT8W6I
-if "9D0ULT8W6I" in enablefeatures:
-    if enablefeatures["9D0ULT8W6I"] == "0":
-        app.register_blueprint(settingsui, url_prefix="/settings")
 app.secret_key="ThEMoSTSeCuRePassWORdINThEWorLD"
 app.static_folder = 'static'
 year = datetime.now().strftime('%Y')
