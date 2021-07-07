@@ -1,11 +1,13 @@
 # Sunflower
 The New Family System
 
-Sunflower Version 1.1.0 LTS
+Version 1.5 - Release
+=======
+
+Sunflower Version 1.5 LTS
 
 # Supported Versions
-Sunflower Version 1.1.0 LTS
-Sunflower Version 1.5.0 Alpha
+Sunflower Version 1.5.0 LTS
 Sunflower Version 2.0.0 Int
 
 # Update Pack Status

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!</title>
+</head>
+<body>
+    <div class="fade-in-text">
+        <h1>{{prodname}}<a2>Version {{ver}}</a2><p>Powered By Mint</p></h1>
+        <a>This system is powered by Sunflower.An Open Source Pocket Money Management System.</a>
+        <div id="all">
+            <p><div class="tmp"><img src="../static/loading.webp" height=100 weight=100/></div>Intializing...</p>
+        </div>
+    </div>
+</body>
+<style>
+    .tmp{
+        vertical-align:center;
+    }
+body {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F1F1F6;
+}
+    h1{
+        font-size:60px;
+    }
+    a{
+        font-size:30px;
+    }
+    a2{
+        font-size:15px;
+    }
+    p{
+        font-size:20px;
+    }
+    .fade-in-text {
+  display: inline-block;
+  color: black;
+  animation: fadeIn linear 3s;
+  -webkit-animation: fadeIn linear 3s;
+  -moz-animation: fadeIn linear 3s;
+  -o-animation: fadeIn linear 3s;
+  -ms-animation: fadeIn linear 3s;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+</style>
+<script>
+    function closeHelpDiv(){
+        document.getElementById("all").style.display="none";
+        window.location.replace("/oobe/license");
+    }
+    // close the div in 5 secs
+    window.setTimeout(closeHelpDiv, 7000);
+</script>
+</html>

@@ -1,7 +1,30 @@
 {% extends "nano/base.html" %}
-{% block webtitle %}Add Or Remove Money{% endblock %}
+{% block webtitle %}{{strings(11)}} - {{productname}}{% endblock %}
 {% block productname %}{{productname}}{% endblock %}
 {% block body %}
-{{productname}} Build {{buildno}}
+{% if flag == False %}
+    {{productname}} {{strings(12)}} {{buildno}}
+{% else %}
+    <div class="main">
+        <h2>{{strings(14)}} {{productname}}</h2>
+        {% if rolerole %}
+            <h3>{{strings(13)}}:</h3>
+            <p>${{remaining}}</p>
+        {% endif %}
+        <br>
+        <br>
+        <a href="addmoney" class="btn btn-primary">{{strings("Add")}} {{strings(2)}}</a>
+        <a href="removemoney" class="btn btn-primary">{{strings("Remove")}} {{strings(2)}}</a>
+        <a href="list" class="btn btn-primary">{{strings(6)}}</a>
+    </div>
+    <style>
+        .main{
+            text-align: center;
+        }
+        p{
+            font-size: 25px;
+        }
+    </style>
+{% endif %}
 {% endblock %}
 {% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

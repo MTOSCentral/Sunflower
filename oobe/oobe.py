@@ -28,13 +28,19 @@ with open("lang\\zh-HK.json",encoding="utf-8") as file:
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
-@oobeui.route('/',methods=['POST','GET'])
+@oobeui.route('/')
+def boot():
+    session["stepoobe"]=0
+    return render_template("nano/welcome.html",prodname=productname,ver="2.0.0")
+@oobeui.route('/license',methods=['POST','GET'])
 def start():
     stmt = """SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';"""
     cursor.execute(stmt)
     result = cursor.fetchone()
     #result=[0]
-    if result[0] == 0:
+    if "stepoobe" not in session:
+        return redirect(url_for("oobe.boot"))
+    if result[0] == 0 and session["stepoobe"] == 0:
         if request.method == "POST":
             session['stepoobe']=1
             return redirect(url_for("oobe.setup"))

@@ -4,6 +4,7 @@
 #Mint Engine Implemented(kernel.py)
 #State:Beta/Prerelease -> Release Canidate
 import json
+import glob
 from otp import OTP
 from tabulate import tabulate
 from flask import Flask, redirect, url_for, render_template, request,session,flash,send_file
@@ -23,12 +24,15 @@ from oobe.oobe import oobeui
 from werkzeug.utils import secure_filename
 from kernel import Kernel
 from history import History
+import os
+glob.glob('*.txt', recursive=True)
 brandinfo={}
 conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
 cursor = conn.cursor()
 #Session Id Layout{"Public ID":"Private ID"}
 sessionid={}
 DEBUG=False
+glob.glob('*.txt', recursive=True)
 with open("branding\\branding.json") as file:
     brandinfo = json.load(file)
     productname = brandinfo["Vendor"]+" "+brandinfo["ProductName"]
@@ -41,6 +45,10 @@ with open("lang\\zh-HK.json",encoding="utf-8") as file:
 with open(lc,encoding="utf-8") as file:
     license1=file.readlines()
     file.close()
+#Implement CFGs - Coming v1.6
+#Language Pack Support
+#Assuming Setup Using OOBE.
+#End Of Language Pack Support
 app = Flask(__name__)
 QRcode(app)
 app.register_blueprint(apimodule, url_prefix="/api")
@@ -52,8 +60,24 @@ app.permanent_session_lifetime = timedelta(days=10)
 build="0300"
 branch="rs_rc1.210211"
 fullbuildname=build+"."+branch
-FRIENDLYVERSION="1.2.0_PRERELEASE"
+FRIENDLYVERSION="1.5.0_PRERELEASE"
 hasher=Hashing()
+#DO NOT HARDCODE
+langname="zh-HK.langpck"
+def langpack_rd():
+    global productname
+    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+        jl=json.loads(f.read())
+        ovr=jl["overrideproductname"]
+        if ovr == "1":
+            productname=jl["0"]
+langpack_rd()
+def langpack(strcode):
+    global langname
+    with open(f"langpck\\{langname}\\strings.sf.json","r", encoding='utf-8') as f:
+        strings=json.loads(f.read())[str(strcode)]
+    return strings
+app.jinja_env.globals.update(strings=langpack)
 @app.route('/license')
 def license():
     return render_template("nano/license.html",productname=productname,year=year,license=license1)
@@ -153,7 +177,16 @@ def login():
 @app.route('/')
 def home():
     if "user" in session:
-        return render_template("nano/home.html",buildno=fullbuildname,productname=productname,year=year)
+        glob.glob('*.txt', recursive=True)
+        kernel=Kernel()
+        tmp=kernel.getmoney(session["user"])
+        if tmp == "D":
+            tmp="0"
+        if session["role"]=="adult":
+            rolerole=False
+        else:
+            rolerole=True
+        return render_template("nano/home.html",buildno=fullbuildname,productname=productname,year=year,flag=True,remaining=tmp,rolerole=rolerole)
     else:
         flash(lang['msg5'])
         return(redirect(url_for("login")))
@@ -448,6 +481,7 @@ def about():
     return "Mint Kernel Version: "+kernel.version()+"<br>Central frontend version: "+FRIENDLYVERSION+"<br> MintLog Version: "+history.version()
 @app.route('/list',methods=["POST","GET"])
 def list():
+    glob.glob('*.txt', recursive=True)
     if "user" in session:
         if request.method == "GET":
             return render_template("nano/hist.html",productname=productname,year=year)
@@ -463,13 +497,40 @@ def list():
     else:
         flash(lang["msg5"])
         return redirect(url_for("login"))
+@app.route('/listall')
+def listall():
+    glob.glob('*.txt', recursive=True)
+    if "user" in session:
+        history=History()
+        return render_template("nano/list.html",lists=history.listall(),productname=productname,year=year)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
 @app.route('/export/<int:start>/<int:end>')
 def export(start,end):
+    glob.glob('*.txt', recursive=True)
     if "user" in session:
         filename=datetime.now().strftime("%Y%m%d%H%M%S")+".txt"
         with open(filename, 'w') as file:
             history=History()
             ex=history.list(start,end)
+            txt=tabulate(ex, headers=["Date","Action", "Money", "Adult", "Child", "Note", "Remaining Value"])
+            file.write(txt)
+        try:
+            return send_file(filename, attachment_filename=filename)
+        except Exception as e:
+            return str(e)
+    else:
+        flash(lang["msg5"])
+        return redirect(url_for("login"))
+@app.route('/export/')
+def export2():
+    glob.glob('*.txt', recursive=True)
+    if "user" in session:
+        filename=datetime.now().strftime("%Y%m%d%H%M%S")+".txt"
+        with open(filename, 'w') as file:
+            history=History()
+            ex=history.listall()
             txt=tabulate(ex, headers=["Date","Action", "Money", "Adult", "Child", "Note", "Remaining Value"])
             file.write(txt)
         try:

@@ -43,3 +43,23 @@ class History:
                 lister.append(u)
         #print(lister)
         return lister
+    def listall(self):
+        global conn
+        sqlstr='select * from history'
+        cur=conn.execute(sqlstr)
+        rows=cur.fetchall()
+        lister=[]
+        for row in rows:
+            #print(row)
+            tmp=datetime.strptime(row[0], "%Y%m%d").date()
+            u=[]
+            u.append(row[0])
+            u.append(row[1])
+            u.append(row[2])
+            u.append(row[3])
+            u.append(row[4])
+            u.append(row[5])
+            u.append(row[6])
+            u[0]=tmp.strftime("%Y-%m-%d")
+            lister.append(u)
+        return lister
