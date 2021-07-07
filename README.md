@@ -14,7 +14,8 @@ Sunflower Version 2.0.0 Int
 [![Building Update Packages](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml/badge.svg?branch=main)](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml)
 
 # Note
-Note:A Half-Working Implementation of an REST API is included
+Note:A Half-Working Implementation of an REST API is includede 
+The Patch Commit For ANY OS support added.
 
 # Warnings And Disclaimer
 

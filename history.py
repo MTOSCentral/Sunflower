@@ -1,9 +1,10 @@
 #MintLog For Mint/Central
 import sqlite3
 from datetime import datetime
-conn =sqlite3.connect('database\\history.sql', check_same_thread=False)
+import os
+conn =sqlite3.connect('database'+os.sep+'history.sql', check_same_thread=False)
 cursor = conn.cursor()
-VER="1.0.0"
+VER="1.0.1"
 class History:
     def __init__(self):
         global conn

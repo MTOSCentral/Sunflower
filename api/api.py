@@ -10,8 +10,9 @@ from flask import json
 from datetime import datetime
 from flask import jsonify
 from kernel import Kernel
+import os
 apimodule=Blueprint("api", __name__, static_folder="static", template_folder="template")
-conn =sqlite3.connect('database\\users.sql', check_same_thread=False)
+conn =sqlite3.connect('database'+os.sep+'users.sql', check_same_thread=False)
 cursor = conn.cursor()
 year = datetime.now().strftime('%Y')
 hasher=Hashing()
