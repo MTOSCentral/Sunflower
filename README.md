@@ -10,6 +10,9 @@ Sunflower Version 1.5 LTS
 Sunflower Version 1.5.0 LTS
 Sunflower Version 2.0.0 Int
 
+# Upcoming Features
+[Click Here To Learn More About Upcoming Features](upcoming.md)
+
 # Update Pack Status
 [![Building Update Packages](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml/badge.svg?branch=main)](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml)
 
