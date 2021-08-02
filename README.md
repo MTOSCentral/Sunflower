@@ -1,7 +1,7 @@
 # Sunflower
 The New Family System
 
-Version 1.5 - Release
+Version 1.5 - Release(Build Version 2.0)
 =======
 
 Sunflower Version 1.5 LTS
