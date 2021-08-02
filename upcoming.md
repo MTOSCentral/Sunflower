@@ -18,13 +18,14 @@ Many more user facing features will come as we continue to improve and tweak our
 
 ## As build number is not same as the release version, we bump the release version to 2.2 for better consistancy and support.
 ## Version 2.2(Codenamed "Egg Tart") -> 22H1 (Build Version 2.2)
-### EggTart Maybe Called Sunflower EX
+### Sunflower EX,Experience the best, Extend the most.
 This is the largest UI Redisign since Sunflower was intialy release, more information about this build will be announced later on December 2021 along with its final release on 22nd of Feb 2022.
 
-We also introduce the New Extentions support, a new way to improve your own Sunflower and the new API is included within this version of Sunflower, it is more robust secure and fast, along with that, we have created serveral client for it, the client for Android,HarmonyOS will come in first half of 2021.
+We also introduce extentions support, a new way to improve your own Sunflower and the new API is included within this version of Sunflower, it is more robust secure and fast, along with that, we have created serveral client for it, the client for Android,HarmonyOS will come in first half of 2021.
 
 We also added multiple languages.
 
 We are sorry but we can't tell you more about this Update, It is a fantastic version and we are sure you will love it.
 
 There are a lot more changes than it seems that makes it the best version of Sunflower ever.
+
