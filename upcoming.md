@@ -17,6 +17,7 @@ The flags feature(internal.config) file is also present to let you enable in-dev
 Many more user facing features will come as we continue to improve and tweak our software.
 
 ## Version 2.0(Codenamed "Egg Tart") -> 22H1
+### EggTart Maybe Called Sunflower EX
 This is the largest UI Redisign since Sunflower was intialy release, more information about this build will be announced later on December 2021 along with its final release on 22nd of Feb 2022.
 
 We also introduce the New Extentions support, a new way to improve your own Sunflower and the new API is included within this version of Sunflower, it is more robust secure and fast, along with that, we have created serveral client for it, the client for Android,HarmonyOS will come in first half of 2021.
