@@ -1,8 +1,8 @@
 {
   "Vendor":"Meow Tech",
-  "ProductName":"Central Series Sunflower",
-  "ProductShortName":"Central Redstone",
+  "ProductName":"Sunflower",
+  "ProductShortName":"Sunflower",
   "License":"license.lc",
-  "Website":"https://192.168.0.16/central/",
-  "UpdateServer":"https://192.168.0.16/central/upgrade/latest.mupd"
+  "Website":"https://192.168.0.16/sunflower/",
+  "UpdateServer":"https://192.168.0.16/sunflower/upgrade/latest.mupd"
 }
