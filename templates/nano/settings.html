@@ -1,0 +1,64 @@
+{% extends "nano/base.html" %}
+{% block webtitle %}{{strings(20)}} - {{productname}}{% endblock %}
+{% block productname %}{{productname}}{% endblock %}
+{% block body %}
+<div class="row" style="width:99%; margin-top:1px;">
+    <div class="col-2" style="text-align: center;">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-home-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">General</a>
+        <a class="nav-link" id="v-pills-profile-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Security</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Localization</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Beta & Customization</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">API</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Backup & Restore</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px;" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">System</a>
+        <a class="nav-link" id="v-pills-messages-tab" style="border-radius:25px; background-color:crimson;color:white" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Advanced</a>
+    </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
+        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis debitis nihil quidem inventore non aliquam, accusantium sed, necessitatibus modi praesentium molestias soluta consequuntur dolore provident enim laborum! Illo, tempore fugiat?</div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+      </div>
+    </div>
+  </div>
+<style>
+    .btn1{
+        border-radius: 25px;
+        background-color: #087f8c;
+        color:white;
+    }
+    #disabled:hover{
+        border-radius: 25px;
+        background-color: #087f8c;
+        color:white;
+        cursor: not-allowed;
+    }
+    .btn1:hover{
+        border-radius: 25px;
+        background-color: #087f8c;
+        color:white;
+        cursor:not-allowed;
+    }
+    h1{
+        text-align: center;
+    }
+    .btn{
+        border-radius: 25px;
+        background-color: #087f8c;
+        color:white;
+        margin-bottom:5px;
+    }
+    .btn:hover{
+        cursor: pointer;
+        background-color: #095256;
+        color:white;
+    }
+    .nav-link{
+        border-radius: 25px;
+    }
+</style>
+{% endblock %}
+{% block footer %}Copyright (c) {{year}} {{productname}}. Powered By Mint.{% endblock %}

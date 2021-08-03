@@ -18,6 +18,16 @@ year = datetime.now().strftime('%Y')
 hasher=Hashing()
 links=['/','/setup']
 apis={}
+sessionid={'sessionid':'PIN'}
+@apimodule.route('/genpair')
+def genpair():
+    global sessionid
+    letters = string.ascii_letters
+    letters=letters+string.digits
+    apitmp=''.join(random.choice(letters) for i in range(64))
+    tmp2=random.range(1000,9999)
+    sessionid[apitmp]=tmp2
+    return [tmp2,apitmp]
 def genapi(user,passwd):
     kernel=Kernel()
     cor=kernel.checkuser(user,passwd)[0]

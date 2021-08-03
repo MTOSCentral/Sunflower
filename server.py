@@ -22,7 +22,7 @@ from datetime import datetime
 from datetime import timedelta
 from oobe.oobe import oobeui
 #9D0ULT8W6I
-from settings.settings import settingsui
+#from settings.settings import settingsui
 from werkzeug.utils import secure_filename
 from kernel import Kernel
 from history import History
@@ -564,6 +564,9 @@ def otpgen():
         return render_template("nano/2fa_gen.html",productname=productname,toqr=tmp[1],year=year)
     else:
         return redirect(url_for("login"))
+@app.route('/settings')
+def settings():
+    return render_template("nano/settings.html")
 if __name__ == "__main__":
 	app.run(port=8888, debug=True,host="0.0.0.0")
 
