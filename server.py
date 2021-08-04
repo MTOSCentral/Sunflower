@@ -139,8 +139,8 @@ def login():
     kernel=Kernel()
     result=kernel.isnew()
     if result[0] == 0:
-        flash("Your Server Haven't Been Setup Yet.")
-        return redirect(url_for("oobe.start"))
+        flash(lang["msg13"])
+        return redirect(url_for("oobe.boot"))
     else:
         #print(chklogin("a","a"))
         #Kernel Module Implemented

@@ -11,5 +11,6 @@
     "msg9":"You Must Login As Adult.",
     "msg10":"You Have Been Logged Out To Prevent Session Hjacking.",
     "msg11":"You Must Login As Children",
-    "msg12":"Username Cannot Be Empty."
+    "msg12":"Username Cannot Be Empty.",
+    "msg13":"Your Server Haven't Been Setup Yet."
 }
