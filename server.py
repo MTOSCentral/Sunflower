@@ -43,7 +43,7 @@ with open("branding"+os.sep+"branding.json") as file:
     lc=brandinfo["License"]
     print(productname)
     file.close()
-with open("lang"+os.sep+"zh-HK.json",encoding="utf-8") as file:
+with open("lang"+os.sep+"en-US.json",encoding="utf-8") as file:
     lang = json.load(file)
     file.close()
 with open(lc,encoding="utf-8") as file:
@@ -80,14 +80,15 @@ def init():
         FRIENDLYVERSION=versionconfig['SunflowerFriendlyVer']
 init()
 #DO NOT HARDCODE
-langname="zh-HK.langpck"
+langname="eng.langpck"
 def langpack_rd():
     global productname
     with open(f"langpck"+os.sep+f"{langname}"+os.sep+"strings.sf.json","r", encoding='utf-8') as f:
         jl=json.loads(f.read())
-        ovr=jl["overrideproductname"]
-        if ovr == "1":
-            productname=jl["0"]
+        if "overrideproductname" in jl:
+            ovr=jl["overrideproductname"]
+            if ovr == "1":
+                productname=jl["0"]
 langpack_rd()
 def langpack(strcode):
     global langname

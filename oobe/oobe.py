@@ -81,6 +81,9 @@ def setup():
                 elif len(a1p) < 1 or len(a2p) < 1 or len(cp) <1:
                     flash("Password must be greater than 1 characters.")
                     return redirect(url_for("oobe.setup"))
+                elif "'" or '"' in a1n or "'" or '"' in a2n and "'" or '"' in cn:
+                    flash("Invalid characters detected.")
+                    return redirect(url_for("oobe.setup"))
                 else:
                     curs = conn.cursor()
                     sqlstr='CREATE TABLE IF NOT EXISTS users \
