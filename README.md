@@ -1,17 +1,22 @@
-# Sunflower
-The New Family System
+# Meow Tech Open Source Central Series Sunflower
 
-Version 1.5 - Release(Build Version 2.0)
-=======
+**Whats this for?** Managing yyour family/child's pocket money with ease with a secure system and history functions
 
-Sunflower Version 1.5 LTS
+**How to install the server** Well, it is complicated, the install guide will come very soon.
+
+# Features
+* **View Add/Remove History**: Easily view add/remove pocket money history
+* **Hash Encryption for password**: Password will never be stealed
+* **Add/Remove Pocket Money**:Thats what it is
+* **Update System**:Fast updae file format.
+* **SQL-Based**:Easily modifiy data on your server(If that's your server)
+
+## Upcoming Features:
+[Click Here To Learn More About Upcoming Features](upcoming.md)
 
 # Supported Versions
 Sunflower Version 1.5.0 LTS
 Sunflower Version 2.0.0 Int
-
-# Upcoming Features
-[Click Here To Learn More About Upcoming Features](upcoming.md)
 
 # Update Pack Status
 [![Building Update Packages](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml/badge.svg?branch=main)](https://github.com/MTOSCentral/Sunflower/actions/workflows/autobuild.yml)
@@ -21,8 +26,9 @@ Note:A Working Implementation of an REST API is included,a redisgn of the API is
 
 
 The Patch Commit For ANY OS support added.
+* GUIDE IN THE WIKI.
 
-# Warnings And Disclaimer
+# Warnings And Disclaimers
 
 ## !!Mint Kernel is a critical part of Sunflower Now and it cannot be run without the kernel.!!
 
