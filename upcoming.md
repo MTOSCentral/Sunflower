@@ -13,6 +13,10 @@ Security Patch will be released as soon as the developer fixed the bugs and will
 
 ## As build number is not same as the release version, we bump the release version to 2.3 for better consistancy and support.
 ## Version 2.3(Codenamed "Egg Tart") -> 22H1 (Build Version 2.3)
+** Once Again, all the features has been merged into Sunflower v4
+
+## As we progress, we implemented many features that are planed for v3 and 4, therfore we opted to skip v2 and v3 for a more ULTRA upgrade
+## Version 4.0(Codenamed "Egg Tart 2") -> 22H1(Build Version 4.0)
 ### Sunflower EX,Experience the best, Extend the most.
 This is one of our largest feature updates yet including a lot of new settings to customize your experience of this software.
 
@@ -22,7 +26,7 @@ The flags feature(internal.config) file is also present to let you enable in-dev
 
 Many more user facing features will come as we continue to improve and tweak our software.
 
-This is the largest UI Redisign since Sunflower was intialy release, more information about this build will be announced later on December 2021 along with its final release on 22nd of Feb 2022.
+This is the largest UI Redisign since Sunflower was intialy release, more information about this build will be announced later on Feb 2022 along with its first beta release on 30th of March 2022.
 
 We also introduce extentions support, a new way to improve your own Sunflower and the new API is included within this version of Sunflower, it is more robust secure and fast, along with that, we have created serveral client for it, the client for Android,HarmonyOS will come in first half of 2021.
 
