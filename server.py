@@ -5,7 +5,9 @@
 #State:Beta/Prerelease -> Release Canidate
 import json
 import glob
-from otp import OTP
+#Removed Components
+#from otp import OTP
+#
 from tabulate import tabulate
 from flask import Flask, redirect, url_for, render_template, request,session,flash,send_file
 import sqlite3
@@ -21,8 +23,6 @@ from passwordencryption import EncryptPass
 from datetime import datetime
 from datetime import timedelta
 from oobe.oobe import oobeui
-#9D0ULT8W6I
-from settings.settings import settingsui
 from werkzeug.utils import secure_filename
 from kernel import Kernel
 from history import History
